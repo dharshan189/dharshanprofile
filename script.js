@@ -3,11 +3,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.tab-content'); // Using existing class as selector
     const contentWrapper = document.querySelector('.content-wrapper');
 
+    // Function to update active class on nav items
+    function updateActiveNavItem(targetId) {
+        navItems.forEach(item => {
+            if (item.getAttribute('data-target') === targetId) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+
     // Function to handle navigation click
     function scrollToSection(targetId) {
         const targetSection = document.getElementById(targetId);
         if (targetSection) {
             targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            updateActiveNavItem(targetId);
         }
     }
 
