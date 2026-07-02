@@ -244,7 +244,7 @@ body {
 
 .name {
     font-family: var(--font-heading);
-    font-size: 4.5rem;
+    font-size: clamp(2.2rem, 7.5vw, 4.5rem);
     font-weight: 700;
     line-height: 1.1;
     margin-bottom: 1rem;
@@ -493,7 +493,7 @@ body {
 /* --- SKILLS SECTION --- */
 .skills-wrapper {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 3rem;
 }
 
@@ -597,7 +597,7 @@ body {
 /* --- PROJECTS SECTION --- */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
     gap: 2rem;
 }
 
@@ -808,6 +808,7 @@ body {
         left: 0;
         backdrop-filter: blur(15px);
         /* Stronger blur for header */
+        z-index: 100;
     }
 
     .logo {
@@ -817,14 +818,14 @@ body {
 
     .nav-menu {
         flex-direction: row;
-        gap: 1rem;
+        gap: 0.8rem;
         flex-grow: 0;
         justify-content: flex-end;
     }
 
     .nav-item {
-        height: 35px;
-        width: 35px;
+        height: 38px;
+        width: 38px;
         margin: 0;
         /* Reset auto margin */
     }
@@ -845,8 +846,12 @@ body {
     }
 
     .container {
-        padding-left: 2rem;
-        padding-right: 2rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    .tab-content {
+        padding: 4rem 1.5rem 2rem 1.5rem;
     }
 
     .full-screen {
@@ -856,7 +861,7 @@ body {
         text-align: center;
         gap: 2rem;
         padding-top: 2rem;
-        /* Add top padding inside hero */
+        min-height: calc(100vh - 60px);
     }
 
     .hero-content {
@@ -904,30 +909,45 @@ body {
     }
 
     .timeline {
+        margin-left: 0.5rem;
         padding-left: 0;
-        border-left: none;
     }
 
     .timeline-item {
-        padding-left: 0;
-        border-left: 2px solid rgba(255, 255, 255, 0.1);
-        margin-left: 10px;
-        padding-left: 20px;
+        padding-left: 1.8rem;
+        padding-bottom: 2.5rem;
+        border-left: none;
     }
 
     .timeline-dot {
-        left: -29px;
+        left: -6px;
+    }
+}
+
+@media (max-width: 600px) {
+    .cta-buttons {
+        flex-direction: column;
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
+        gap: 0.8rem;
+    }
+
+    .cta-buttons .btn {
+        width: 100%;
+        text-align: center;
+        display: inline-block;
     }
 }
 
 @media (max-width: 480px) {
     .container {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
 
-    .name {
-        font-size: 2.8rem;
+    .tab-content {
+        padding: 3rem 1rem 1.5rem 1rem;
     }
 
     .hero-visual {
@@ -936,12 +956,12 @@ body {
     }
 
     .nav-menu {
-        gap: 0.5rem;
+        gap: 0.4rem;
     }
 
     .nav-item {
-        width: 30px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
     }
 
     .project-card {
