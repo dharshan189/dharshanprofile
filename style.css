@@ -29,8 +29,8 @@ body {
     font-family: var(--font-body);
     background-color: var(--bg-color);
     color: var(--text-primary);
+    /* overflow hidden only on desktop where sidebar is fixed */
     overflow: hidden;
-    /* To handle scrolling internally in main */
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -217,6 +217,7 @@ body {
 /* --- HERO SECTION --- */
 .full-screen {
     display: flex;
+    position: relative; /* contain absolute children */
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -226,8 +227,7 @@ body {
 }
 
 #hero {
-    overflow: hidden;
-    /* For particle effects if added */
+    overflow: visible; /* allow visual elements to breathe */
 }
 
 .hero-content {
@@ -363,8 +363,8 @@ body {
     right: 8%;
     top: 50%;
     transform: translateY(-50%);
-    width: 350px;
-    height: 350px;
+    width: 320px;
+    height: 320px;
     z-index: 2;
     display: flex;
     align-items: center;
@@ -493,8 +493,8 @@ body {
 /* --- SKILLS SECTION --- */
 .skills-wrapper {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: 2rem;
 }
 
 .skill-category h3 {
@@ -597,8 +597,8 @@ body {
 /* --- PROJECTS SECTION --- */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(270px, 100%), 1fr));
+    gap: 1.5rem;
 }
 
 .project-card {
@@ -778,37 +778,61 @@ body {
     margin-top: 4rem;
 }
 
-/* --- RESPONSIVE DESIGN --- */
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
 
+/* --- TABLET (< 1024px) --- */
 @media (max-width: 1024px) {
     .container {
-        padding-left: 3rem;
-        padding-right: 3rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    .hero-visual {
+        width: 260px;
+        height: 260px;
+        right: 4%;
+    }
+
+    .name {
+        font-size: clamp(2.5rem, 6vw, 4rem);
     }
 }
 
+/* --- MOBILE NAV / STACKED LAYOUT (< 900px) --- */
 @media (max-width: 900px) {
-    .app-layout {
-        flex-direction: column;
+
+    /* Body scrolls on mobile — layout is stacked, not fixed sidebar */
+    body {
+        overflow: auto;
+        height: auto;
+        min-height: 100vh;
     }
 
+    .app-layout {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    /* Sidebar becomes a fixed top nav bar */
     .sidebar {
         width: 100%;
-        height: auto;
-        /* Allow height to fit content */
+        height: 60px;
         min-height: 60px;
         flex-direction: row;
-        padding: 0.5rem 1rem;
+        padding: 0 1rem;
+        align-items: center;
         justify-content: space-between;
         border-right: none;
         border-bottom: 1px solid var(--glass-border);
         position: fixed;
-        /* Fix header to top */
         top: 0;
         left: 0;
-        backdrop-filter: blur(15px);
-        /* Stronger blur for header */
-        z-index: 100;
+        z-index: 1000;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
     }
 
     .logo {
@@ -818,50 +842,56 @@ body {
 
     .nav-menu {
         flex-direction: row;
-        gap: 0.8rem;
+        gap: 0.4rem;
         flex-grow: 0;
         justify-content: flex-end;
     }
 
     .nav-item {
-        height: 38px;
-        width: 38px;
+        height: 36px;
+        width: 36px;
         margin: 0;
-        /* Reset auto margin */
+        border-radius: 8px;
     }
 
     .nav-item i {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 
     .tooltip {
         display: none;
     }
 
+    /* Content wrapper scrolls as a normal block */
     .content-wrapper {
-        height: 100vh;
-        padding-top: 60px;
-        /* Space for fixed header */
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+        padding-top: 60px; /* offset for fixed top nav */
         margin: 0;
     }
 
-    .container {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-    }
-
+    /* All section cards get comfortable padding */
     .tab-content {
-        padding: 4rem 1.5rem 2rem 1.5rem;
+        padding: 2.5rem 1.2rem 2rem 1.2rem;
+        min-height: auto;
     }
 
+    .container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    /* --- HERO --- */
     .full-screen {
-        flex-direction: column-reverse;
-        /* Image on top for mobile */
-        justify-content: center;
+        position: relative;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
         text-align: center;
-        gap: 2rem;
-        padding-top: 2rem;
-        min-height: calc(100vh - 60px);
+        gap: 1.5rem;
+        padding: 2rem 1.2rem 3rem;
+        min-height: auto;
     }
 
     .hero-content {
@@ -869,38 +899,50 @@ body {
         display: flex;
         flex-direction: column;
         align-items: center;
-        /* Center content */
+        order: 2;
     }
 
+    /* Portrait image sits above the text */
     .hero-visual {
+        order: 1;
         position: relative;
-        width: 180px;
-        height: 180px;
         right: auto;
         top: auto;
         transform: none;
+        width: 160px;
+        height: 160px;
         margin: 0 auto;
     }
 
     .glow-circle {
-        width: 300px;
-        height: 300px;
+        width: 280px;
+        height: 280px;
     }
 
-    .about-grid,
-    .contact-wrapper {
-        grid-template-columns: 1fr;
-    }
-
-    .roles,
+    /* --- BUTTONS --- */
     .cta-buttons {
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
     }
 
-    .section-title {
-        font-size: 2rem;
+    .cta-buttons .btn,
+    .cta-buttons a.btn {
+        width: 100%;
         text-align: center;
         display: block;
+        box-sizing: border-box;
+    }
+
+    /* --- SECTION TITLES --- */
+    .section-title {
+        font-size: 1.8rem;
+        text-align: center;
+        display: block;
+        margin-bottom: 1.5rem;
     }
 
     .section-title::after {
@@ -908,55 +950,46 @@ body {
         transform: translateX(-50%);
     }
 
+    /* --- GRIDS: force single column --- */
+    .about-grid,
+    .contact-wrapper,
+    .skills-wrapper,
+    .projects-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.2rem;
+    }
+
+    /* --- TIMELINE --- */
     .timeline {
-        margin-left: 0.5rem;
+        margin-left: 1rem;
         padding-left: 0;
+    }
+
+    .timeline::before {
+        left: 0;
     }
 
     .timeline-item {
         padding-left: 1.8rem;
-        padding-bottom: 2.5rem;
-        border-left: none;
+        padding-bottom: 2rem;
     }
 
     .timeline-dot {
         left: -6px;
+        top: 2px;
+    }
+
+    /* --- FOOTER --- */
+    .footer {
+        padding: 1rem 1.2rem;
+        margin-top: 2rem;
     }
 }
 
-@media (max-width: 600px) {
-    .cta-buttons {
-        flex-direction: column;
-        width: 100%;
-        max-width: 320px;
-        margin: 0 auto;
-        gap: 0.8rem;
-    }
-
-    .cta-buttons .btn {
-        width: 100%;
-        text-align: center;
-        display: inline-block;
-    }
-}
-
+/* --- SMALL PHONES (< 480px) --- */
 @media (max-width: 480px) {
-    .container {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-
-    .tab-content {
-        padding: 3rem 1rem 1.5rem 1rem;
-    }
-
-    .hero-visual {
-        width: 150px;
-        height: 150px;
-    }
-
     .nav-menu {
-        gap: 0.4rem;
+        gap: 0.25rem;
     }
 
     .nav-item {
@@ -964,27 +997,18 @@ body {
         height: 32px;
     }
 
-    .project-card {
-        min-height: auto;
-        /* Let card grow naturally */
+    .hero-visual {
+        width: 130px;
+        height: 130px;
     }
 
-    .contact-wrapper {
-        gap: 2rem;
+    .tab-content {
+        padding: 2rem 1rem 1.5rem 1rem;
     }
 
     .contact-info,
     .contact-form {
-        padding: 1.5rem;
-    }
-}
-
-/* --- FOOTER RESPONSIVE --- */
-@media (max-width: 900px) {
-    .footer {
-        padding: 1rem 1.5rem;
-        z-index: 101;
-        /* Ensure it's above relative elements if needed, though usually at bottom */
+        padding: 1.2rem;
     }
 }
 
