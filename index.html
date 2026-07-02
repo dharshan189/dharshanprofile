@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dharshan S | Portfolio</title>
+    <meta name="description" content="Portfolio of Dharshan S - IT Student, Web Developer, and UI Designer.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <span class="logo-text">SD</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active" data-target="hero">
+                    <i class="fas fa-home"></i>
+                    <span class="tooltip">Home</span>
+                </li>
+                <li class="nav-item" data-target="about">
+                    <i class="fas fa-user"></i>
+                    <span class="tooltip">About</span>
+                </li>
+                <li class="nav-item" data-target="skills">
+                    <i class="fas fa-layer-group"></i>
+                    <span class="tooltip">Skills</span>
+                </li>
+                <li class="nav-item" data-target="projects">
+                    <i class="fas fa-code-branch"></i>
+                    <span class="tooltip">Projects</span>
+                </li>
+                <li class="nav-item" data-target="education">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span class="tooltip">Education</span>
+                </li>
+                <li class="nav-item" data-target="contact">
+                    <i class="fas fa-paper-plane"></i>
+                    <span class="tooltip">Contact</span>
+                </li>
+            </ul>
+
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="content-wrapper">
+
+            <!-- Hero Section -->
+            <section id="hero" class="tab-content active full-screen">
+                <div class="hero-content">
+                    <div class="greeting">Hello, I'm</div>
+                    <h1 class="name">DHARSHAN S</h1>
+
+
+
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary" onclick="navigateTo('contact')">Contact Me</button>
+                        <a href="resume.pdf" target="_blank" class="btn btn-outline"
+                            style="text-decoration: none; display: inline-block;">Download Resume <i
+                                class="fas fa-download"></i></a>
+                        <a href="https://wa.me/919940856744?text=Hello%20Dharshan%2C%20I%20would%20like%20to%20get%20in%20touch."
+                            target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">Message Me</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <img src="profile.jpg" alt="Dharshan S" class="profile-image">
+                    <div class="glow-circle"></div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="tab-content">
+                <div class="container">
+                    <h2 class="section-title">About Me</h2>
+                    <div class="about-grid">
+                        <div class="about-card glass-card">
+                            <h3>Who I Am</h3>
+                            <p>I am a dedicated <strong>Information Technology Student</strong> with a strong foundation
+                                in modern web technologies. My journey involves bridging the gap between logic and
+                                creativity, ensuring every line of code results in a seamless user experience.</p>
+
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-card glass-card">
+                                <i class="fas fa-code"></i>
+                                <h4>Web Developer</h4>
+                                <p>Passionate about frontend Development</p>
+                            </div>
+                            <div class="stat-card glass-card">
+                                <i class="fas fa-paint-brush"></i>
+                                <h4>UI Designer</h4>
+                                <p>Creating visually appealing user interfaces</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skills Section -->
+            <section id="skills" class="tab-content">
+                <div class="container">
+                    <h2 class="section-title">My Skills</h2>
+                    <div class="skills-wrapper">
+
+                        <div class="skill-category">
+                            <h3>Languages Known</h3>
+                            <div class="skill-list-container">
+                                <ul class="skill-list">
+
+
+
+                                    <li class="skill-item">
+                                        <i class="fab fa-html5"></i>
+                                        <span>HTML & CSS</span>
+                                    </li>
+
+                                    <li class="skill-item">
+                                        <i class="fa-brands fa-python"></i>
+                                        <span>Python</span>
+
+                                    </li>
+                                    <li class="skill-item">
+                                        <i class="fa-brands fa-figma"></i>
+                                        <span>Figma</span>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="tab-content">
+                <div class="container">
+                    <h2 class="section-title"> Projects Done</h2>
+                    <div class="projects-grid">
+
+                        <!-- Project Card: Thiran Attendance Tracker -->
+                        <div class="project-card glass-card">
+                            <div class="project-image"
+                                style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);">
+                                <i class="fas fa-calendar-check fa-3x" style="color: white;"></i>
+                            </div>
+                            <div class="project-details">
+                                <h3>Thiran Smart Hub</h3>
+                                <p>A real-time attendance tracker for team monitoring. It also includes Employee
+                                    task Management.</p>
+                                <div class="tags">
+                                    <span>HTML</span>
+                                    <span>CSS</span>
+                                    <span>JS</span>
+
+                                </div>
+                                <a href="https://thiran-attendance-pl3v.vercel.app/" target="_blank" class="btn-link"
+                                    style="margin-top: 15px; display: inline-block; color: var(--accent-primary); text-decoration: none; font-weight: 600;">View
+                                    Project <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
+
+                        <!-- Project Card 1 -->
+                        <div class="project-card glass-card">
+                            <div class="project-image"
+                                style="background: linear-gradient(135deg, #134e4a 0%, #2dd4bf 100%);">
+                                <i class="fas fa-flask fa-3x" style="color: white;"></i>
+                            </div>
+                            <div class="project-details">
+                                <h3>Laboratory Management System</h3>
+                                <p>A system to manage laboratory patient details,test details,report details
+                                    efficiently.</p>
+                                <div class="tags">
+                                    <span>HTML</span>
+                                    <span>CSS</span>
+                                    <span>Java</span>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project Card 2 -->
+                        <div class="project-card glass-card">
+                            <div class="project-image"
+                                style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);">
+                                <i class="fas fa-bolt fa-3x" style="color: #fbbf24;"></i>
+                            </div>
+                            <div class="project-details">
+                                <h3>Vehicle Service Centre Management System</h3>
+                                <p> A system for vehicle service scheduling, parts management, and customer
+                                    records.</p>
+                                <div class="tags">
+                                    <span>HTML</span>
+                                    <span>CSS</span>
+                                    <span>Python</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project Card 3 -->
+                        <div class="project-card glass-card">
+                            <div class="project-image"
+                                style="background: linear-gradient(135deg, #4c1d95 0%, #8b5cf6 100%);">
+                                <i class="fas fa-wallet fa-3x" style="color: white;"></i>
+                            </div>
+                            <div class="project-details">
+                                <h3>Personal Portfolio</h3>
+
+                                <div class="tags">
+                                    <span>HTML</span>
+                                    <span>CSS</span>
+                                    <span>JS</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Education Section -->
+            <section id="education" class="tab-content">
+                <div class="container">
+                    <h2 class="section-title">Education Journey</h2>
+                    <div class="timeline">
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-date">2024 - Present</div>
+                            <div class="timeline-content glass-card">
+                                <h3>Bachelor of Technology (IT)</h3>
+                                <h4>M Kumarasamy College of Engineering</h4>
+                                <p>Focusing on software development and web technologies. </p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-date">2023 - 2024</div>
+                            <div class="timeline-content glass-card">
+                                <h3>Higher Secondary (HSC)</h3>
+                                <h4>Thamarai Matric Higher Secondary School</h4>
+                                <p> Percentage: 87.8%</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-date">2021-2022</div>
+                            <div class="timeline-content glass-card">
+                                <h3>Secondary School (SSLC)</h3>
+                                <h4>SSV Matric Higher Secondary School</h4>
+                                <p>Percentage: 83.2%</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="tab-content">
+                <div class="container">
+                    <h2 class="section-title">Get In Touch</h2>
+                    <div class="contact-wrapper">
+                        <div class="contact-info glass-card">
+                            <h3>Contact Information</h3>
+
+                            <div class="info-item">
+                                <i class="fas fa-phone-alt"></i>
+                                <span>+91 9940856744</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>dharshans2206@gmail.com</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Erode , Tamil Nadu, India</span>
+                            </div>
+                            <div class="social-links">
+                                <a href="https://www.linkedin.com/in/dharshan-s-32b7b332a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                                    target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="https://github.com/dharshans006" target="_blank" class="social-icon"><i
+                                        class="fab fa-github"></i></a>
+
+                                <a href="https://www.instagram.com/dharshan_sadhasivam22?igsh=MTdrNW43cDZzd2NnNA==&utm_source=ig_contact_invite"
+                                    target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                                <a href="https://wa.me/919940856744" target="_blank" class="social-icon"><i
+                                        class="fab fa-whatsapp"></i></a>
+                            </div>
+                        </div>
+                        <form id="contact-form" class="contact-form glass-card" action="https://formspree.io/f/xeelevbj"
+                            method="POST">
+                            <h3>Send Message</h3>
+                            <div class="input-group">
+                                <input type="text" name="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="input-group">
+                                <input type="email" name="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="input-group">
+                                <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <p>
+                    © 2026
+                    All rights reserved .
+                    Made with <i class="fas fa-heart" style="color: rgb(226, 240, 41);"></i> by Dharshan S
+
+                </p>
+
+            </footer>
+
+        </main>
+    </div>
+
+    <!-- Background Decoration -->
+    <div class="bg-decoration"></div>
+
+    <script src="script.js?v=3"></script>
+</body>
+
+</html>

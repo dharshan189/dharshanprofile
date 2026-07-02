@@ -1,0 +1,41 @@
+/* ... (existing styles) ... */
+
+/* --- SKILL LIST STYLES (New) --- */
+.skill-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0;
+}
+
+.skill-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.8rem 1.2rem;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    transition: all 0.3s ease;
+}
+
+.skill-item:hover {
+    background: rgba(20, 184, 166, 0.1);
+    transform: translateX(5px);
+    border-color: var(--accent-primary);
+}
+
+.skill-item i {
+    font-size: 1.5rem;
+    color: var(--accent-primary);
+    width: 30px;
+    /* Fixed width for alignment */
+    text-align: center;
+}
+
+.skill-item span {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
