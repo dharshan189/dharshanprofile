@@ -10,10 +10,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -27,36 +27,39 @@
                 <span class="logo-text">SD</span>
             </div>
             <ul class="nav-menu">
-                <li class="nav-item active" data-target="hero">
+                <li class="nav-item active" data-target="hero" onclick="navigateTo('hero')">
                     <i class="fas fa-home"></i>
                     <span class="tooltip">Home</span>
                 </li>
-                <li class="nav-item" data-target="about">
+                <li class="nav-item" data-target="about" onclick="navigateTo('about')">
                     <i class="fas fa-user"></i>
                     <span class="tooltip">About</span>
                 </li>
-                <li class="nav-item" data-target="skills">
+                <li class="nav-item" data-target="skills" onclick="navigateTo('skills')">
                     <i class="fas fa-layer-group"></i>
                     <span class="tooltip">Skills</span>
                 </li>
-                <li class="nav-item" data-target="projects">
+                <li class="nav-item" data-target="projects" onclick="navigateTo('projects')">
                     <i class="fas fa-code-branch"></i>
                     <span class="tooltip">Projects</span>
                 </li>
-                <li class="nav-item" data-target="education">
+                <li class="nav-item" data-target="certifications" onclick="navigateTo('certifications')">
+                    <i class="fas fa-award"></i>
+                    <span class="tooltip">Certifications</span>
+                </li>
+                <li class="nav-item" data-target="education" onclick="navigateTo('education')">
                     <i class="fas fa-graduation-cap"></i>
                     <span class="tooltip">Education</span>
                 </li>
-                <li class="nav-item" data-target="contact">
+                <li class="nav-item" data-target="contact" onclick="navigateTo('contact')">
                     <i class="fas fa-paper-plane"></i>
                     <span class="tooltip">Contact</span>
                 </li>
             </ul>
-
         </nav>
 
         <!-- Main Content Area -->
-        <main class="content-wrapper">
+        <main class="content-wrapper" id="content-wrapper">
 
             <!-- Hero Section -->
             <section id="hero" class="tab-content active full-screen">
@@ -64,20 +67,53 @@
                     <div class="greeting">Hello, I'm</div>
                     <h1 class="name">DHARSHAN S</h1>
 
-
-
                     <div class="cta-buttons">
-                        <button class="btn btn-primary" onclick="navigateTo('contact')">Contact Me</button>
-                        <a href="resume.pdf" target="_blank" class="btn btn-outline"
+                        <button class="btn btn-primary magnetic-item" onclick="navigateTo('contact')">Contact Me</button>
+                        <a href="resume.pdf" target="_blank" class="btn btn-outline magnetic-item"
                             style="text-decoration: none; display: inline-block;">Download Resume <i
                                 class="fas fa-download"></i></a>
                         <a href="https://wa.me/919940856744?text=Hello%20Dharshan%2C%20I%20would%20like%20to%20get%20in%20touch."
-                            target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">Message Me</a>
+                            target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp magnetic-item">Message Me</a>
                     </div>
                 </div>
                 <div class="hero-visual">
-                    <img src="profile.jpg" alt="Dharshan S" class="profile-image">
-                    <div class="glow-circle"></div>
+                    <div class="magnet-wrapper" id="hero-magnet">
+                        <div class="glow-circle"></div>
+                        
+                        <!-- High-Tech Animated Loading Spinner Rings -->
+                        <svg class="avatar-loading-svg" viewBox="0 0 340 340">
+                            <defs>
+                                <linearGradient id="loadingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#d8e932" />
+                                    <stop offset="50%" stop-color="#38bdf8" />
+                                    <stop offset="100%" stop-color="#d8e932" />
+                                </linearGradient>
+                                <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feGaussianBlur stdDeviation="4" result="blur" />
+                                    <feMerge>
+                                        <feMergeNode in="blur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <!-- Background Track Ring -->
+                            <circle class="loader-bg-track" cx="170" cy="170" r="156" />
+                            <!-- Counter-Rotating Dashed Tech Ring -->
+                            <circle class="loader-dashed-ring" cx="170" cy="170" r="162" />
+                            <!-- Dynamic Active Liquid Loading Stroke -->
+                            <circle class="loader-active-stroke" cx="170" cy="170" r="156" />
+                        </svg>
+
+                        <!-- Glowing Orbiting Satellite Bead -->
+                        <div class="loader-satellite-orbit">
+                            <div class="loader-satellite-dot"></div>
+                        </div>
+
+                        <!-- Avatar Frame with 100% Fully Visible Photo -->
+                        <div class="avatar-frame">
+                            <img src="profile.jpg" alt="Dharshan S" class="profile-image">
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -86,25 +122,23 @@
                 <div class="container">
                     <h2 class="section-title">About Me</h2>
                     <div class="about-grid">
-                        <div class="about-card glass-card">
+                        <div class="about-card glass-card" data-spotlight>
                             <h3>Who I Am</h3>
                             <p>I am a dedicated <strong>Information Technology Student</strong> with a strong foundation
                                 in modern web technologies. My journey involves bridging the gap between logic and
                                 creativity, ensuring every line of code results in a seamless user experience.</p>
-
                         </div>
                         <div class="stats-grid">
-                            <div class="stat-card glass-card">
+                            <div class="stat-card glass-card reveal" data-spotlight>
                                 <i class="fas fa-code"></i>
                                 <h4>Web Developer</h4>
                                 <p>Passionate about frontend Development</p>
                             </div>
-                            <div class="stat-card glass-card">
+                            <div class="stat-card glass-card reveal" data-spotlight>
                                 <i class="fas fa-paint-brush"></i>
                                 <h4>UI Designer</h4>
                                 <p>Creating visually appealing user interfaces</p>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -115,35 +149,27 @@
                 <div class="container">
                     <h2 class="section-title">My Skills</h2>
                     <div class="skills-wrapper">
-
-                        <div class="skill-category">
+                        <div class="skill-category glass-card" data-spotlight>
                             <h3>Languages Known</h3>
                             <div class="skill-list-container">
                                 <ul class="skill-list">
-
-
-
-                                    <li class="skill-item">
+                                    <li class="skill-item magnetic-item reveal">
                                         <i class="fab fa-html5"></i>
                                         <span>HTML & CSS</span>
                                     </li>
 
-                                    <li class="skill-item">
+                                    <li class="skill-item magnetic-item reveal">
                                         <i class="fa-brands fa-python"></i>
                                         <span>Python</span>
-
                                     </li>
-                                    <li class="skill-item">
+
+                                    <li class="skill-item magnetic-item reveal">
                                         <i class="fa-brands fa-figma"></i>
                                         <span>Figma</span>
-
                                     </li>
                                 </ul>
                             </div>
                         </div>
-
-
-
                     </div>
                 </div>
             </section>
@@ -153,9 +179,8 @@
                 <div class="container">
                     <h2 class="section-title"> Projects Done</h2>
                     <div class="projects-grid">
-
                         <!-- Project Card: Thiran Attendance Tracker -->
-                        <div class="project-card glass-card">
+                        <div class="project-card glass-card reveal" data-spotlight>
                             <div class="project-image"
                                 style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);">
                                 <i class="fas fa-calendar-check fa-3x" style="color: white;"></i>
@@ -168,16 +193,15 @@
                                     <span>HTML</span>
                                     <span>CSS</span>
                                     <span>JS</span>
-
                                 </div>
-                                <a href="https://thiran-attendance-pl3v.vercel.app/" target="_blank" class="btn-link"
+                                <a href="https://thiran-attendance-pl3v.vercel.app/" target="_blank" class="btn-link magnetic-item"
                                     style="margin-top: 15px; display: inline-block; color: var(--accent-primary); text-decoration: none; font-weight: 600;">View
                                     Project <i class="fas fa-external-link-alt"></i></a>
                             </div>
                         </div>
 
                         <!-- Project Card 1 -->
-                        <div class="project-card glass-card">
+                        <div class="project-card glass-card reveal" data-spotlight>
                             <div class="project-image"
                                 style="background: linear-gradient(135deg, #134e4a 0%, #2dd4bf 100%);">
                                 <i class="fas fa-flask fa-3x" style="color: white;"></i>
@@ -190,13 +214,12 @@
                                     <span>HTML</span>
                                     <span>CSS</span>
                                     <span>Java</span>
-
                                 </div>
                             </div>
                         </div>
 
                         <!-- Project Card 2 -->
-                        <div class="project-card glass-card">
+                        <div class="project-card glass-card reveal" data-spotlight>
                             <div class="project-image"
                                 style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);">
                                 <i class="fas fa-bolt fa-3x" style="color: #fbbf24;"></i>
@@ -214,7 +237,7 @@
                         </div>
 
                         <!-- Project Card 3 -->
-                        <div class="project-card glass-card">
+                        <div class="project-card glass-card reveal" data-spotlight>
                             <div class="project-image"
                                 style="background: linear-gradient(135deg, #4c1d95 0%, #8b5cf6 100%);">
                                 <i class="fas fa-wallet fa-3x" style="color: white;"></i>
@@ -234,36 +257,125 @@
                 </div>
             </section>
 
+                        <!-- Certifications Section -->
+            <section id="certifications" class="tab-content">
+                <div class="container">
+                    <h2 class="section-title">Certifications &amp; Achievements</h2>
+                    <div class="certifications-grid">
+
+                        <!-- Certification 1: IoT 4.0 Elite + Silver -->
+                        <div class="cert-card glass-card reveal" data-spotlight>
+                            <div class="cert-icon-wrapper silver-glow">
+                                <i class="fas fa-industry"></i>
+                            </div>
+                            <div class="cert-badge silver-badge"><i class="fas fa-medal"></i> Elite + Silver</div>
+                            <div class="cert-details">
+                                <h3>Introduction to IoT (4.0)</h3>
+                                <p class="cert-issuer"><i class="fas fa-graduation-cap"></i> NPTEL (IIT)</p>
+                                <p class="cert-desc">Completed with Elite + Silver distinction, focusing on Industry 4.0, smart cyber-physical manufacturing systems, IIoT architecture, and automated industrial analytics.</p>
+                            </div>
+                        </div>
+
+                        <!-- Certification 2: Oracle -->
+                        <div class="cert-card glass-card reveal" data-spotlight>
+                            <div class="cert-icon-wrapper oracle-glow">
+                                <i class="fas fa-cloud"></i>
+                            </div>
+                            <div class="cert-badge oracle-badge">Oracle Certified</div>
+                            <div class="cert-details">
+                                <h3>AI Cloud Infrastructure 2025 AI Foundations Associate</h3>
+                                <p class="cert-issuer"><i class="fas fa-building"></i> Oracle Corporation</p>
+                                <p class="cert-desc">Validated proficiency in core Artificial Intelligence concepts, cloud machine learning infrastructure, and enterprise AI foundational services.</p>
+                            </div>
+                        </div>
+
+                        <!-- Certification 3: NPTEL Elite -->
+                        <div class="cert-card glass-card reveal" data-spotlight>
+                            <div class="cert-icon-wrapper nptel-glow">
+                                <i class="fas fa-microchip"></i>
+                            </div>
+                            <div class="cert-badge elite-badge"><i class="fas fa-medal"></i> Elite Certification</div>
+                            <div class="cert-details">
+                                <h3>Introduction to Internet of Things</h3>
+                                <p class="cert-issuer"><i class="fas fa-graduation-cap"></i> NPTEL (IIT)</p>
+                                <p class="cert-desc">Successfully completed with Elite distinction, covering sensor networks, IoT protocols, embedded hardware interfaces, and cloud analytics.</p>
+                            </div>
+                        </div>
+
+                        <!-- Certification 4: HackerRank -->
+                        <div class="cert-card glass-card reveal" data-spotlight>
+                            <div class="cert-icon-wrapper hackerrank-glow">
+                                <i class="fab fa-python"></i>
+                            </div>
+                            <div class="cert-badge hr-badge">HackerRank Certified</div>
+                            <div class="cert-details">
+                                <h3>Python (Basic) Certification</h3>
+                                <p class="cert-issuer"><i class="fas fa-check-circle"></i> HackerRank</p>
+                                <p class="cert-desc">Demonstrated practical programming proficiency in Python data structures, algorithms, conditionals, string operations, and problem solving.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+                        
+                        <!-- Internship: Zeboto Technologies -->
+                        <div class="cert-card glass-card intern-cert-card reveal" data-spotlight>
+                            <div class="cert-icon-wrapper intern-glow">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <div class="cert-badge intern-cert-badge"><i class="fas fa-laptop-code"></i> Internship</div>
+                            <div class="cert-details">
+                                <h3>Web Development Intern</h3>
+                                <p class="cert-issuer"><i class="fas fa-building"></i> Zeboto Technologies, Coimbatore</p>
+                                <p class="cert-desc">Hands-on internship building responsive frontend architectures, modern UIs, and client-focused web solutions using HTML, CSS, and JavaScript.</p>
+                            </div>
+                        </div>
+
+                        <!-- Achievement: DormSync 2nd Prize IDEAVERSE'26 -->
+                        <div class="cert-card glass-card award-cert-card reveal" data-spotlight>
+                            <div class="cert-icon-wrapper achievement-glow">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="cert-badge award-badge"><i class="fas fa-medal"></i> 2nd Prize &bull; IDEAVERSE&apos;26</div>
+                            <div class="cert-details">
+                                <h3>DormSync &mdash; Hostel Management System</h3>
+                                <p class="cert-issuer"><i class="fas fa-university"></i> M Kumarasamy College of Engineering</p>
+                                <p class="cert-desc">Won 2nd prize at IDEAVERSE&apos;26 hackathon. A comprehensive hostel management platform for student room allocation, attendance records, and warden administration.</p>
+                            </div>
+                        </div>
+
             <!-- Education Section -->
             <section id="education" class="tab-content">
                 <div class="container">
-                    <h2 class="section-title">Education Journey</h2>
+                    <h2 class="section-title">Experience &amp; Education</h2>
                     <div class="timeline">
-
-                        <div class="timeline-item">
+                        <div class="timeline-item reveal">
                             <div class="timeline-dot"></div>
                             <div class="timeline-date">2024 - Present</div>
-                            <div class="timeline-content glass-card">
+                            <div class="timeline-content glass-card" data-spotlight>
                                 <h3>Bachelor of Technology (IT)</h3>
                                 <h4>M Kumarasamy College of Engineering</h4>
                                 <p>Focusing on software development and web technologies. </p>
                             </div>
                         </div>
 
-                        <div class="timeline-item">
+                        <div class="timeline-item reveal">
                             <div class="timeline-dot"></div>
                             <div class="timeline-date">2023 - 2024</div>
-                            <div class="timeline-content glass-card">
+                            <div class="timeline-content glass-card" data-spotlight>
                                 <h3>Higher Secondary (HSC)</h3>
                                 <h4>Thamarai Matric Higher Secondary School</h4>
                                 <p> Percentage: 87.8%</p>
                             </div>
                         </div>
 
-                        <div class="timeline-item">
+                        <div class="timeline-item reveal">
                             <div class="timeline-dot"></div>
                             <div class="timeline-date">2021-2022</div>
-                            <div class="timeline-content glass-card">
+                            <div class="timeline-content glass-card" data-spotlight>
                                 <h3>Secondary School (SSLC)</h3>
                                 <h4>SSV Matric Higher Secondary School</h4>
                                 <p>Percentage: 83.2%</p>
@@ -279,35 +391,35 @@
                 <div class="container">
                     <h2 class="section-title">Get In Touch</h2>
                     <div class="contact-wrapper">
-                        <div class="contact-info glass-card">
+                        <div class="contact-info glass-card" data-spotlight>
                             <h3>Contact Information</h3>
 
-                            <div class="info-item">
+                            <div class="info-item magnetic-item">
                                 <i class="fas fa-phone-alt"></i>
                                 <span>+91 9940856744</span>
                             </div>
-                            <div class="info-item">
+                            <div class="info-item magnetic-item">
                                 <i class="fas fa-envelope"></i>
                                 <span>dharshans2206@gmail.com</span>
                             </div>
-                            <div class="info-item">
+                            <div class="info-item magnetic-item">
                                 <i class="fas fa-map-marker-alt"></i>
                                 <span>Erode , Tamil Nadu, India</span>
                             </div>
                             <div class="social-links">
                                 <a href="https://www.linkedin.com/in/dharshan-s-32b7b332a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
-                                    target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="https://github.com/dharshans006" target="_blank" class="social-icon"><i
+                                    target="_blank" class="social-icon magnetic-item"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="https://github.com/dharshans006" target="_blank" class="social-icon magnetic-item"><i
                                         class="fab fa-github"></i></a>
 
                                 <a href="https://www.instagram.com/dharshan_sadhasivam22?igsh=MTdrNW43cDZzd2NnNA==&utm_source=ig_contact_invite"
-                                    target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
-                                <a href="https://wa.me/919940856744" target="_blank" class="social-icon"><i
+                                    target="_blank" class="social-icon magnetic-item"><i class="fab fa-instagram"></i></a>
+                                <a href="https://wa.me/919940856744" target="_blank" class="social-icon magnetic-item"><i
                                         class="fab fa-whatsapp"></i></a>
                             </div>
                         </div>
                         <form id="contact-form" class="contact-form glass-card" action="https://formspree.io/f/xeelevbj"
-                            method="POST">
+                            method="POST" data-spotlight>
                             <h3>Send Message</h3>
                             <div class="input-group">
                                 <input type="text" name="name" placeholder="Your Name" required>
@@ -318,7 +430,7 @@
                             <div class="input-group">
                                 <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">Send Message</button>
+                            <button type="submit" class="btn btn-primary magnetic-item">Send Message</button>
                         </form>
                     </div>
                 </div>
@@ -330,18 +442,20 @@
                     © 2026
                     All rights reserved .
                     Made with <i class="fas fa-heart" style="color: rgb(226, 240, 41);"></i> by Dharshan S
-
                 </p>
-
             </footer>
 
         </main>
     </div>
 
     <!-- Background Decoration -->
-    <div class="bg-decoration"></div>
+    <div class="bg-decoration">
+        <div class="ambient-glow glow-1"></div>
+        <div class="ambient-glow glow-2"></div>
+        <div class="ambient-glow glow-3"></div>
+    </div>
 
-    <script src="script.js?v=3"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

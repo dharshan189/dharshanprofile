@@ -1,10 +1,28 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const navItems = document.querySelectorAll('.nav-item');
-    const sections = document.querySelectorAll('.tab-content'); // Using existing class as selector
-    const contentWrapper = document.querySelector('.content-wrapper');
+/* ==========================================================================
+   DHARSHAN S - MOTION ENGINE
+   - Universal Dual-Scroll & Navigation Engine
+   - 60FPS Magnetic Lerp Custom Cursor
+   - 3D Card Tilt & Dynamic Radial Spotlight Tracker
+   - 3D Magnetic Hero Avatar Physics
+   - Scroll-Driven Staggered Item Reveals
+   - Magnetic Button Physics & AJAX Formspree Handler
+   ========================================================================== */
 
-    // Function to update active class on nav items
-    function updateActiveNavItem(targetId) {
+document.addEventListener('DOMContentLoaded', () => {
+
+    /* --------------------------------------------------------------------------
+       1. UNIVERSAL DUAL-SCROLL & NAVIGATION ENGINE
+       Supports desktop container scrolling (#content-wrapper) & mobile (window)
+       -------------------------------------------------------------------------- */
+    const contentWrapper = document.getElementById('content-wrapper');
+    const navItems = document.querySelectorAll('.nav-item');
+    const sections = document.querySelectorAll('.tab-content');
+
+    function isMobileLayout() {
+        return window.innerWidth <= 900;
+    }
+
+    function updateActiveNav(targetId) {
         navItems.forEach(item => {
             if (item.getAttribute('data-target') === targetId) {
                 item.classList.add('active');
@@ -14,123 +32,269 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Function to handle navigation click
     function scrollToSection(targetId) {
         const targetSection = document.getElementById(targetId);
-        if (targetSection) {
+        if (!targetSection) return;
+
+        if (isMobileLayout()) {
+            const navHeight = 64;
+            const elementPosition = targetSection.getBoundingClientRect().top + window.pageYOffset;
+            window.scrollTo({
+                top: elementPosition - navHeight,
+                behavior: 'smooth'
+            });
+        } else if (contentWrapper) {
             targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            updateActiveNavItem(targetId);
+        } else {
+            targetSection.scrollIntoView({ behavior: 'smooth' });
         }
+
+        updateActiveNav(targetId);
     }
 
-    // Add click event listeners to nav items
-    navItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const targetId = item.getAttribute('data-target');
-            scrollToSection(targetId);
-        });
-    });
-
-    // Expose navigateTo function globally for buttons (like "Contact Me" in Hero)
-    window.navigateTo = (targetId) => {
+    // Expose navigateTo globally for all buttons & links
+    window.navigateTo = function(targetId) {
         scrollToSection(targetId);
     };
 
-    /* 
-    // Scroll Spy DISABLED based on user request ("layout elements should not change while scrolling")
-    const observerOptions = {
-        root: contentWrapper,
-        threshold: 0.3,
-        rootMargin: "0px"
-    };
+    // Nav items click listener
+    navItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = item.getAttribute('data-target');
+            scrollToSection(target);
+        });
+    });
 
-    const observer = new IntersectionObserver((entries) => {
+    // ScrollSpy with IntersectionObserver
+    const observerRoot = isMobileLayout() ? null : contentWrapper;
+    const scrollSpyObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Remove active class from all nav items
-                navItems.forEach(nav => nav.classList.remove('active'));
-                
-                // Add active class to the corresponding nav item
-                const id = entry.target.id;
-                const activeNav = document.querySelector(`.nav-item[data-target="${id}"]`);
-                if (activeNav) {
-                    activeNav.classList.add('active');
-                }
-                
-                // Optional: Add fade-in animation
-                entry.target.classList.add('fade-in');
+                const activeId = entry.target.getAttribute('id');
+                updateActiveNav(activeId);
             }
         });
-    }, observerOptions);
+    }, {
+        root: observerRoot,
+        threshold: 0.25,
+        rootMargin: "-10% 0px -50% 0px"
+    });
 
     sections.forEach(section => {
-        observer.observe(section);
+        scrollSpyObserver.observe(section);
     });
-    */
 
-    // --- FORM HANDLING ---
+
+    /* --------------------------------------------------------------------------
+       2. 3D CARD TILT & DYNAMIC RADIAL SPOTLIGHT TRACKER
+       -------------------------------------------------------------------------- */
+    const spotlightCards = document.querySelectorAll('[data-spotlight]');
+
+    spotlightCards.forEach(card => {
+        let bounds;
+
+        function onMouseEnter() {
+            bounds = card.getBoundingClientRect();
+            card.style.setProperty('--spotlight-opacity', '1');
+        }
+
+        function onMouseMove(e) {
+            if (!bounds) bounds = card.getBoundingClientRect();
+            const mouseX = e.clientX - bounds.left;
+            const mouseY = e.clientY - bounds.top;
+
+            card.style.setProperty('--spotlight-x', `${mouseX}px`);
+            card.style.setProperty('--spotlight-y', `${mouseY}px`);
+
+            // Subtle 3D tilt calculation for project & stat cards
+            if (card.classList.contains('project-card') || card.classList.contains('stat-card')) {
+                const centerX = bounds.width / 2;
+                const centerY = bounds.height / 2;
+                const deltaX = (e.clientX - (bounds.left + centerX)) / centerX;
+                const deltaY = (e.clientY - (bounds.top + centerY)) / centerY;
+
+                const tiltX = -deltaY * 5;
+                const tiltY = deltaX * 5;
+
+                card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.015, 1.015, 1.015)`;
+            }
+        }
+
+        function onMouseLeave() {
+            card.style.setProperty('--spotlight-opacity', '0');
+            if (card.classList.contains('project-card') || card.classList.contains('stat-card')) {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            }
+            bounds = null;
+        }
+
+        card.addEventListener('mouseenter', onMouseEnter);
+        card.addEventListener('mousemove', onMouseMove);
+        card.addEventListener('mouseleave', onMouseLeave);
+    });
+
+
+    /* --------------------------------------------------------------------------
+       4. HERO 3D MAGNETIC PORTRAIT PHYSICS
+       -------------------------------------------------------------------------- */
+    const magnetContainer = document.getElementById('hero-magnet');
+
+    if (magnetContainer && !isTouchDevice) {
+        const triggerDistance = 220;
+        let isAttracted = false;
+
+        window.addEventListener('mousemove', (e) => {
+            const rect = magnetContainer.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const distThresholdX = rect.width / 2 + triggerDistance;
+            const distThresholdY = rect.height / 2 + triggerDistance;
+
+            const deltaX = e.clientX - centerX;
+            const deltaY = e.clientY - centerY;
+
+            if (Math.abs(deltaX) < distThresholdX && Math.abs(deltaY) < distThresholdY) {
+                if (!isAttracted) {
+                    magnetContainer.style.transition = 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)';
+                    isAttracted = true;
+                }
+
+                const moveX = deltaX * 0.18;
+                const moveY = deltaY * 0.18;
+                const rotX = -deltaY * 0.04;
+                const rotY = deltaX * 0.04;
+
+                magnetContainer.style.transform = `translate3d(${moveX}px, ${moveY}px, 0px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+            } else {
+                if (isAttracted) {
+                    magnetContainer.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    magnetContainer.style.transform = 'translate3d(0px, 0px, 0px) rotateX(0deg) rotateY(0deg)';
+                    isAttracted = false;
+                }
+            }
+        });
+    }
+
+
+    /* --------------------------------------------------------------------------
+       5. MAGNETIC BUTTON PULL MICRO-INTERACTIONS
+       -------------------------------------------------------------------------- */
+    const magneticButtons = document.querySelectorAll('.magnetic-item');
+
+    if (!isTouchDevice) {
+        magneticButtons.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const btnCenterX = rect.left + rect.width / 2;
+                const btnCenterY = rect.top + rect.height / 2;
+
+                const deltaX = (e.clientX - btnCenterX) * 0.22;
+                const deltaY = (e.clientY - btnCenterY) * 0.22;
+
+                btn.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0)`;
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate3d(0px, 0px, 0)';
+            });
+        });
+    }
+
+
+    /* --------------------------------------------------------------------------
+       7. CONTACT FORM AJAX SUBMISSION (Formspree)
+       -------------------------------------------------------------------------- */
     const contactForm = document.getElementById('contact-form');
+
     if (contactForm) {
-        contactForm.addEventListener('submit', async function (e) {
-            e.preventDefault(); // Prevent default page reload/redirect
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalBtnHtml = submitBtn.innerHTML;
+
+            submitBtn.innerHTML = 'Sending... <i class="fas fa-circle-notch fa-spin" style="margin-left: 6px;"></i>';
+            submitBtn.disabled = true;
+
+            const existingMsg = contactForm.querySelector('.form-status-msg');
+            if (existingMsg) existingMsg.remove();
+
+            const statusMsg = document.createElement('div');
+            statusMsg.className = 'form-status-msg';
 
             const formData = new FormData(contactForm);
-            const statusMessage = document.createElement('div');
-            statusMessage.className = 'form-message';
-
-            // Remove existing message if any
-            const existingMessage = contactForm.querySelector('.form-message');
-            if (existingMessage) existingMessage.remove();
-
-            // Show loading state
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.innerText;
-            submitBtn.innerText = 'Sending...';
-            submitBtn.disabled = true;
 
             try {
                 const response = await fetch(contactForm.action, {
                     method: 'POST',
                     body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
+                    headers: { 'Accept': 'application/json' }
                 });
 
                 if (response.ok) {
-                    statusMessage.innerText = "Thanks for your message! I'll get back to you soon.";
-                    statusMessage.style.color = "#4ade80"; // Success Green
-                    statusMessage.style.background = "rgba(74, 222, 128, 0.1)";
-                    statusMessage.style.border = "1px solid rgba(74, 222, 128, 0.2)";
-
-                    contactForm.reset(); // Clear the form fields
+                    statusMsg.innerText = "Thank you! Your message has been sent successfully. I will get back to you soon.";
+                    statusMsg.style.background = 'rgba(74, 222, 128, 0.15)';
+                    statusMsg.style.border = '1px solid rgba(74, 222, 128, 0.35)';
+                    statusMsg.style.color = '#4ade80';
+                    contactForm.reset();
                 } else {
                     const data = await response.json();
-                    if (Object.hasOwn(data, 'errors')) {
-                        statusMessage.innerText = data["errors"].map(error => error["message"]).join(", ");
-                    } else {
-                        statusMessage.innerText = "Oops! There was a problem submitting your form.";
-                    }
-                    statusMessage.style.color = "#ef4444"; // Error Red
-                    statusMessage.style.background = "rgba(239, 68, 68, 0.1)";
-                    statusMessage.style.border = "1px solid rgba(239, 68, 68, 0.2)";
-                    console.error('Formspree Error:', data);
+                    const errMsg = (data && data.errors) ? data.errors.map(err => err.message).join(', ') : 'Oops! There was a problem submitting your form.';
+                    statusMsg.innerText = errMsg;
+                    statusMsg.style.background = 'rgba(239, 68, 68, 0.15)';
+                    statusMsg.style.border = '1px solid rgba(239, 68, 68, 0.35)';
+                    statusMsg.style.color = '#ef4444';
                 }
-            } catch (error) {
-                statusMessage.innerText = "Oops! There was a problem submitting your form.";
-                statusMessage.style.color = "#ef4444";
-                statusMessage.style.background = "rgba(239, 68, 68, 0.1)";
-                statusMessage.style.border = "1px solid rgba(239, 68, 68, 0.2)";
+            } catch (err) {
+                statusMsg.innerText = "Oops! Network error. Please try again later or contact directly on WhatsApp.";
+                statusMsg.style.background = 'rgba(239, 68, 68, 0.15)';
+                statusMsg.style.border = '1px solid rgba(239, 68, 68, 0.35)';
+                statusMsg.style.color = '#ef4444';
             } finally {
-                contactForm.appendChild(statusMessage);
-                submitBtn.innerText = originalBtnText;
+                contactForm.appendChild(statusMsg);
+                submitBtn.innerHTML = originalBtnHtml;
                 submitBtn.disabled = false;
 
-                // Clear message after 5 seconds
                 setTimeout(() => {
-                    statusMessage.remove();
-                }, 5000);
+                    if (statusMsg && statusMsg.parentNode) {
+                        statusMsg.remove();
+                    }
+                }, 6000);
             }
         });
     }
+
+
+    /* --------------------------------------------------------------------------
+       8. SCROLL REVEAL OBSERVER — staggered fade-slide-up
+       -------------------------------------------------------------------------- */
+    const revealEls = document.querySelectorAll('.reveal');
+    if (revealEls.length > 0) {
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target); // fire once
+                }
+            });
+        }, {
+            threshold: 0.08,
+            rootMargin: '0px 0px -40px 0px'
+        });
+        revealEls.forEach(el => revealObserver.observe(el));
+    }
+
+    /* --------------------------------------------------------------------------
+       9. SMOOTH SECTION ENTRANCE — fade in sections as they enter viewport
+       -------------------------------------------------------------------------- */
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            entry.target.style.opacity = entry.isIntersecting ? '1' : '0.85';
+        });
+    }, { threshold: 0.05 });
+    sections.forEach(s => sectionObserver.observe(s));
+
+
 });
