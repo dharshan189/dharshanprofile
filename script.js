@@ -10,6 +10,8 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
     /* --------------------------------------------------------------------------
        1. UNIVERSAL DUAL-SCROLL & NAVIGATION ENGINE
        Supports desktop container scrolling (#content-wrapper) & mobile (window)
@@ -276,24 +278,37 @@ document.addEventListener('DOMContentLoaded', () => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    revealObserver.unobserve(entry.target); // fire once
+                    revealObserver.unobserve(entry.target);
                 }
             });
         }, {
-            threshold: 0.08,
-            rootMargin: '0px 0px -40px 0px'
+            root: observerRoot,
+            threshold: 0.05,
+            rootMargin: '50px 0px 0px 0px'
         });
-        revealEls.forEach(el => revealObserver.observe(el));
+        revealEls.forEach(el => {
+            revealObserver.observe(el);
+            // Check if element is already within view on initial load
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                el.classList.add('visible');
+            }
+        });
     }
 
     /* --------------------------------------------------------------------------
-       9. SMOOTH SECTION ENTRANCE — fade in sections as they enter viewport
+       9. SMOOTH SECTION ENTRANCE
        -------------------------------------------------------------------------- */
     const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            entry.target.style.opacity = entry.isIntersecting ? '1' : '0.85';
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+            }
         });
-    }, { threshold: 0.05 });
+    }, { 
+        root: observerRoot,
+        threshold: 0.05 
+    });
     sections.forEach(s => sectionObserver.observe(s));
 
 
